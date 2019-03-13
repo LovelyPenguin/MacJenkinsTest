@@ -32,13 +32,19 @@ public class ProjectBuilder
         string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
         //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
 
-        PlayerSettings.Android.bundleVersionCode = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+        PlayerSettings.Android.bundleVersionCode = (Int32)(DateTime.UtcNow.Subtract(new DateTime(2000, 2, 22))).TotalSeconds;
 
         //set the other settings from environment variables
+        /*
         PlayerSettings.Android.keystoreName = Environment.GetEnvironmentVariable("ANDROID_KEYSTORE_NAME");
         PlayerSettings.Android.keystorePass = Environment.GetEnvironmentVariable("ANDROID_KEYSTORE_PASSWORD");
         PlayerSettings.Android.keyaliasName = Environment.GetEnvironmentVariable("ANDROID_KEYALIAS_NAME");
         PlayerSettings.Android.keyaliasPass = Environment.GetEnvironmentVariable("ANDROID_KEYALIAS_PASSWORD");
+        */
+        PlayerSettings.Android.keystoreName = "/Users/Shared/Jenkins/VoxellersTestKey.keystore";
+        PlayerSettings.Android.keystorePass = "woong8589";
+        PlayerSettings.Android.keyaliasName = "key0";
+        PlayerSettings.Android.keyaliasPass = "woong8589";
 
         GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport");
     }
@@ -51,7 +57,7 @@ public class ProjectBuilder
         string dateToFileName = string.Format("{0:yyyy-MM-dd-HHmmss}", currentTIme);
 
         // identifier 설정. iOS와 Android 모두 하나의 세팅으로 해결 가능한 것으로 보임.
-        PlayerSettings.applicationIdentifier = "com.Voxellers.TestBuild"; // 빌드 세팅에 필요한 해당 정보 등은 특정한 Custom Editor로 모아 편집이 가능하도록 수정해야할 것으로 보임.
+        PlayerSettings.applicationIdentifier = "com.Voxellers.JenkinsTestBuild"; // 빌드 세팅에 필요한 해당 정보 등은 특정한 Custom Editor로 모아 편집이 가능하도록 수정해야할 것으로 보임.
 
         EditorUserBuildSettings.SwitchActiveBuildTarget(buildTargetGroup, build_target);
         UnityEditor.Build.Reporting.BuildReport res = BuildPipeline.BuildPlayer(scenes, target_path, build_target, build_options);
