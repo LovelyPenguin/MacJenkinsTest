@@ -32,6 +32,7 @@ public class ProjectBuilder
         string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
         //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
 
+        // 번들버전이 같으면 앱이 올라가지 않으니 날짜를 이용해서 빌드버전을 올리는 모양이다.
         PlayerSettings.Android.bundleVersionCode = (Int32)(DateTime.UtcNow.Subtract(new DateTime(2000, 2, 22))).TotalSeconds;
 
         //set the other settings from environment variables
@@ -41,11 +42,13 @@ public class ProjectBuilder
         PlayerSettings.Android.keyaliasName = Environment.GetEnvironmentVariable("ANDROID_KEYALIAS_NAME");
         PlayerSettings.Android.keyaliasPass = Environment.GetEnvironmentVariable("ANDROID_KEYALIAS_PASSWORD");
         */
+        // 환경변수로 하는 방법이 먹히지 않아 직접적으로 입력해줌
         PlayerSettings.Android.keystoreName = "/Users/Shared/Jenkins/VoxellersTestKey.keystore";
         PlayerSettings.Android.keystorePass = "woong8589";
         PlayerSettings.Android.keyaliasName = "key0";
         PlayerSettings.Android.keyaliasPass = "woong8589";
 
+        // 이 부분은 자동화가 필요함
         PlayerSettings.Android.bundleVersionCode = 2;
 
         GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport");
