@@ -46,7 +46,7 @@ public class ProjectBuilder
         PlayerSettings.Android.keyaliasName = "key0";
         PlayerSettings.Android.keyaliasPass = "woong8589";
 
-        PlayerSettings.Android.bundleVersionCode = 1;
+        PlayerSettings.Android.bundleVersionCode = 2;
 
         GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport");
     }
