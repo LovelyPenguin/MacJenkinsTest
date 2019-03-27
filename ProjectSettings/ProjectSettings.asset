@@ -118,7 +118,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1
+  bundleVersion: 0.2
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -153,9 +153,9 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.Voxellers.JenkinsTestBuild
-    Standalone: com.Voxellers.TestBuild
+    Standalone: com.Voxellers.JenkinsTestBuild
   buildNumber: {}
-  AndroidBundleVersionCode: 601272879
+  AndroidBundleVersionCode: 4
   AndroidMinSdkVersion: 18
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1

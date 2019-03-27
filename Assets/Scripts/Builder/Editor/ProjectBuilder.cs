@@ -13,7 +13,7 @@ public class ProjectBuilder
 
     // 번들버전 코드는 무조건 int형으로 만들어야 함!
     // 번들버전코드는 절대 중복되지도 못하고 절대 이전보다 낮은 숫자로는 변경할 수는 없음
-    static int bundleVersionCode = 4;
+    static int bundleVersionCode = 5;
 
     // 마켓에서 보이는 버전코드인데 수정하지 않더라도 괜찮음
     // 마켓 업데이트가 보이 때문에 몰래 업데이트는 못하겠지만 사용자가 신경 못쓴다면 잠수함 패치가 가능함
@@ -41,7 +41,7 @@ public class ProjectBuilder
         //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
 
         // 번들버전이 같으면 앱이 올라가지 않으니 날짜를 이용해서 빌드버전을 올리는 모양이다.
-        PlayerSettings.Android.bundleVersionCode = (Int32)(DateTime.UtcNow.Subtract(new DateTime(2000, 2, 22))).TotalSeconds;
+        //PlayerSettings.Android.bundleVersionCode = (Int32)(DateTime.UtcNow.Subtract(new DateTime(2000, 2, 22))).TotalSeconds;
 
         //set the other settings from environment variables
         /*
@@ -80,7 +80,7 @@ public class ProjectBuilder
         UnityEditor.Build.Reporting.BuildReport res = BuildPipeline.BuildPlayer(scenes, target_path, build_target, build_options);
 
         // 빌드 번호 설정해줘야 함.
-        BuildReportMaker buildReportMaker = new BuildReportMaker(buildReportFileName, res);
+        BuildReportMaker buildReportMaker = new BuildReportMaker(buildReportFileName, res, "/BuildReport");
     }
 
     [MenuItem("Custom/CI/Build PC")]
