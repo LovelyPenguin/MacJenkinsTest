@@ -11,6 +11,14 @@ public class ProjectBuilder
     static string[] SCENES = FindEnabledEditorScene();
     static string TARGET_DIR = "Build";
 
+    // 번들버전 코드는 무조건 int형으로 만들어야 함!
+    // 번들버전코드는 절대 중복되지도 못하고 절대 이전보다 낮은 숫자로는 변경할 수는 없음
+    static int bundleVersionCode = 4;
+
+    // 마켓에서 보이는 버전코드인데 수정하지 않더라도 괜찮음
+    // 마켓 업데이트가 보이 때문에 몰래 업데이트는 못하겠지만 사용자가 신경 못쓴다면 잠수함 패치가 가능함
+    static float gameVersion = 0.2f;
+
     private static string[] FindEnabledEditorScene()
     {
         List<string> EditorScenes = new List<string>();
@@ -49,7 +57,11 @@ public class ProjectBuilder
         PlayerSettings.Android.keyaliasPass = "woong8589";
 
         // 이 부분은 자동화가 필요함
-        PlayerSettings.Android.bundleVersionCode = 3;
+        // 빌드 버전을 스프레드시트로 이용하는 방법은 여러모로 위험요소가 많다
+        // 플러그인 중 하나라도 문제가 생기면 개판난다.
+        // 딱 현재 그꼴나서 사용이 불가능하므로 다른 방법을 고려해보는 방법을 생각해봐야한다.
+        PlayerSettings.Android.bundleVersionCode = bundleVersionCode;
+        PlayerSettings.bundleVersion = gameVersion.ToString();
 
         GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport");
     }
