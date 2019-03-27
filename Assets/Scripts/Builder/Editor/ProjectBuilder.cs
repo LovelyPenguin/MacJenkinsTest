@@ -49,7 +49,7 @@ public class ProjectBuilder
         PlayerSettings.Android.keyaliasPass = "woong8589";
 
         // 이 부분은 자동화가 필요함
-        PlayerSettings.Android.bundleVersionCode = 2;
+        PlayerSettings.Android.bundleVersionCode = 3;
 
         GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport");
     }
