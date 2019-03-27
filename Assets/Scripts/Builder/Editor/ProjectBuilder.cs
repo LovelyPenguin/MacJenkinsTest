@@ -80,7 +80,7 @@ public class ProjectBuilder
         UnityEditor.Build.Reporting.BuildReport res = BuildPipeline.BuildPlayer(scenes, target_path, build_target, build_options);
 
         char sep = Path.AltDirectorySeparatorChar;
-        string REPORT_TARGET_PATH = Path.GetFullPath(".") + sep + "BuildReport";
+        string REPORT_TARGET_PATH = Path.GetFullPath(".") + sep + "/BuildReport";
         // 빌드 번호 설정해줘야 함.
         BuildReportMaker buildReportMaker = new BuildReportMaker(buildReportFileName, res, REPORT_TARGET_PATH);
     }
