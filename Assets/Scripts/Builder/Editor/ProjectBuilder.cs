@@ -79,10 +79,10 @@ public class ProjectBuilder
         EditorUserBuildSettings.SwitchActiveBuildTarget(buildTargetGroup, build_target);
         UnityEditor.Build.Reporting.BuildReport res = BuildPipeline.BuildPlayer(scenes, target_path, build_target, build_options);
 
-        char sep = Path.DirectorySeparatorChar;
-        string REPORT_TARGET_PATH = Path.GetFullPath(".") + sep + "/BuildReport";
+        //char sep = Path.DirectorySeparatorChar;
+        //string REPORT_TARGET_PATH = Path.GetFullPath(".") + sep + "/BuildReport";
         // 빌드 번호 설정해줘야 함.
-        BuildReportMaker buildReportMaker = new BuildReportMaker(buildReportFileName, res, REPORT_TARGET_PATH);
+        BuildReportMaker buildReportMaker = new BuildReportMaker(buildReportFileName, res);
     }
 
     [MenuItem("Custom/CI/Build PC")]
