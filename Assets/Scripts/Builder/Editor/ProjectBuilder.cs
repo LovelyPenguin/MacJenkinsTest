@@ -33,14 +33,17 @@ public class ProjectBuilder
 
     static void AndroidBuild(BuildOptions option = BuildOptions.None)
     {
+        GetCSVData csv = new GetCSVData();
+        csv.GetNewVersion(out bundleVersionCode, out gameVersion);
+
+        PlayerSettings.Android.bundleVersionCode = bundleVersionCode;
+        PlayerSettings.bundleVersion = gameVersion.ToString();
+
         //string androidDir = "/Android";
         string androidDir = "/output";
 
-        // 파일명 테스트를 위해 중복하게 만듬
-        UnityEngine.Random random = new UnityEngine.Random();
-
         char sep = Path.DirectorySeparatorChar;
-        string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, UnityEngine.Random.Range(1000,2000));
+        string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.Android.bundleVersionCode);
         DirectoryInfo di = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
         //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
 
@@ -58,17 +61,10 @@ public class ProjectBuilder
         PlayerSettings.Android.keyaliasPass = Environment.GetEnvironmentVariable("ANDROID_KEYALIAS_PASSWORD");
         */
         // 환경변수로 하는 방법이 먹히지 않아 직접적으로 입력해줌
-        PlayerSettings.Android.keystoreName = "/Users/Shared/Jenkins/VoxellersTestKey.keystore";
+        PlayerSettings.Android.keystoreName = "/Users/Shared/Jenkins/Development/VoxellersTestKey.keystore";
         PlayerSettings.Android.keystorePass = "woong8589";
         PlayerSettings.Android.keyaliasName = "key0";
         PlayerSettings.Android.keyaliasPass = "woong8589";
-
-        // 이 부분은 자동화가 필요함
-        // 빌드 버전을 스프레드시트로 이용하는 방법은 여러모로 위험요소가 많다
-        // 플러그인 중 하나라도 문제가 생기면 개판난다.
-        // 딱 현재 그꼴나서 사용이 불가능하므로 다른 방법을 고려해보는 방법을 생각해봐야한다.
-        PlayerSettings.Android.bundleVersionCode = bundleVersionCode;
-        PlayerSettings.bundleVersion = gameVersion.ToString();
 
         GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport");
     }
