@@ -64,6 +64,9 @@ public class ProjectBuilder
         PlayerSettings.Android.keyaliasName = "key0";
         PlayerSettings.Android.keyaliasPass = "woong8589";
 
+        bundleVersionCode = 8;
+        gameVersion = 0.4f;
+
         // 이 부분은 자동화가 필요함
         // 빌드 버전을 스프레드시트로 이용하는 방법은 여러모로 위험요소가 많다
         // 플러그인 중 하나라도 문제가 생기면 개판난다.
