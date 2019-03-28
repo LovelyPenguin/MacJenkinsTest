@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
+//using UnityEditor;
 
 public class DisplayVersion : MonoBehaviour {
     [SerializeField]
@@ -17,7 +17,7 @@ public class DisplayVersion : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        bundleVersionText.text = PlayerSettings.Android.bundleVersionCode.ToString();
-        versionText.text = PlayerSettings.bundleVersion.ToString();
+        //bundleVersionText.text = Application.version;
+        versionText.text = Application.version;
     }
 }
