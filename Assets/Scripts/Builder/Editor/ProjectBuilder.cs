@@ -38,13 +38,13 @@ public class ProjectBuilder
 
         char sep = Path.DirectorySeparatorChar;
         string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.Android.bundleVersionCode);
-        //DirectoryInfo di = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
+        DirectoryInfo di = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
         //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
 
-        //if (di.Exists == false)
-       //{
-         //   di.Create();
-        //}
+        if (di.Exists == false)
+        { 
+            di.Create();
+        }
 
         // 번들버전이 같으면 앱이 올라가지 않으니 날짜를 이용해서 빌드버전을 올리는 모양이다.
         //PlayerSettings.Android.bundleVersionCode = (Int32)(DateTime.UtcNow.Subtract(new DateTime(2000, 2, 22))).TotalSeconds;
