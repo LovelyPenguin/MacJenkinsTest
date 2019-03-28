@@ -13,7 +13,7 @@ public class ProjectBuilder
 
     // 번들버전 코드는 무조건 int형으로 만들어야 함!
     // 번들버전코드는 절대 중복되지도 못하고 절대 이전보다 낮은 숫자로는 변경할 수는 없음
-    static int bundleVersionCode = 8;
+    static int bundleVersionCode = 9;
 
     // 마켓에서 보이는 버전코드인데 수정하지 않더라도 괜찮음
     // 마켓 업데이트가 보이기 때문에 몰래 업데이트는 못하겠지만 사용자가 신경 못쓴다면 잠수함 패치가 가능함
@@ -37,11 +37,10 @@ public class ProjectBuilder
         string androidDir = "/output";
 
         // 파일명 테스트를 위해 중복하게 만듬
-        System.Random random = new System.Random();
-        random.Next();
+        UnityEngine.Random random = new UnityEngine.Random();
 
         char sep = Path.DirectorySeparatorChar;
-        string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, random);
+        string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, UnityEngine.Random.Range(1000,2000));
         DirectoryInfo di = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
         //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
 
@@ -63,9 +62,6 @@ public class ProjectBuilder
         PlayerSettings.Android.keystorePass = "woong8589";
         PlayerSettings.Android.keyaliasName = "key0";
         PlayerSettings.Android.keyaliasPass = "woong8589";
-
-        bundleVersionCode = 8;
-        gameVersion = 0.4f;
 
         // 이 부분은 자동화가 필요함
         // 빌드 버전을 스프레드시트로 이용하는 방법은 여러모로 위험요소가 많다
