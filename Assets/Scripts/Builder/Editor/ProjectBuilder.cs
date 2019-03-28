@@ -38,7 +38,7 @@ public class ProjectBuilder
 
         char sep = Path.DirectorySeparatorChar;
         string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.Android.bundleVersionCode);
-        DirectoryInfo di = new DirectoryInfo(BUILD_TARGET_PATH);
+        DirectoryInfo di = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
         //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
 
         if (di.Exists == false)
