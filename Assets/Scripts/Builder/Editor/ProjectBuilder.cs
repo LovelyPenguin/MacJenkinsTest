@@ -13,11 +13,11 @@ public class ProjectBuilder
 
     // 번들버전 코드는 무조건 int형으로 만들어야 함!
     // 번들버전코드는 절대 중복되지도 못하고 절대 이전보다 낮은 숫자로는 변경할 수는 없음
-    static int bundleVersionCode = 5;
+    static int bundleVersionCode = 6;
 
     // 마켓에서 보이는 버전코드인데 수정하지 않더라도 괜찮음
-    // 마켓 업데이트가 보이 때문에 몰래 업데이트는 못하겠지만 사용자가 신경 못쓴다면 잠수함 패치가 가능함
-    static float gameVersion = 0.2f;
+    // 마켓 업데이트가 보이기 때문에 몰래 업데이트는 못하겠지만 사용자가 신경 못쓴다면 잠수함 패치가 가능함
+    static float gameVersion = 0.3f;
 
     private static string[] FindEnabledEditorScene()
     {
