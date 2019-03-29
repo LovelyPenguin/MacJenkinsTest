@@ -45,7 +45,7 @@ public class ProjectBuilder
         char sep = Path.DirectorySeparatorChar;
         string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion);
         DirectoryInfo di = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
-        DirectoryInfo backupDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + "Backup");
+        DirectoryInfo backupDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + "/Backup");
         //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
 
         // Output 디렉토리가 없을때
@@ -55,7 +55,6 @@ public class ProjectBuilder
         if (!backupDirectory.Exists)
             backupDirectory.Create();
 
-        //set the other settings from environment variables
         PlayerSettings.Android.keystoreName = Environment.GetEnvironmentVariable("ANDROID_KEYSTORE_NAME");
         PlayerSettings.Android.keystorePass = Environment.GetEnvironmentVariable("ANDROID_KEYSTORE_PASSWORD");
         PlayerSettings.Android.keyaliasName = Environment.GetEnvironmentVariable("ANDROID_KEYALIAS_NAME");
