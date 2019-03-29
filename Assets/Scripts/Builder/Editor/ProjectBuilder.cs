@@ -44,6 +44,7 @@ public class ProjectBuilder
 
         char sep = Path.DirectorySeparatorChar;
         string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion);
+        string copyAndMove = Path.GetFullPath(".") + sep + TARGET_DIR + "/Backup" + string.Format("/AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion);
         DirectoryInfo di = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
         DirectoryInfo backupDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + "/Backup");
         //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
@@ -69,7 +70,7 @@ public class ProjectBuilder
         PlayerSettings.Android.keyaliasPass = "woong8589";
 
         GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport" + "_" + PlayerSettings.Android.bundleVersionCode + "_" + PlayerSettings.bundleVersion);
-        File.Copy(BUILD_TARGET_PATH, "/Users/Shared/Jenkins/Home/workspace/MacTest/Build/Backup", false);
+        File.Copy(BUILD_TARGET_PATH, copyAndMove, false);
     }
 
     static void GenericBuild(string[] scenes, string target_path, BuildTargetGroup buildTargetGroup, BuildTarget build_target, BuildOptions build_options, string buildReportFileName = "BuildReport")
