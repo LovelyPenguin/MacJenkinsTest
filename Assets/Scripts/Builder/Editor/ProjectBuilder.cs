@@ -69,6 +69,7 @@ public class ProjectBuilder
         PlayerSettings.Android.keyaliasPass = "woong8589";
 
         GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport" + "_" + PlayerSettings.Android.bundleVersionCode + "_" + PlayerSettings.bundleVersion);
+        File.Copy(BUILD_TARGET_PATH, "/Users/Shared/Jenkins/Home/workspace/MacTest/Build/Backup", false);
     }
 
     static void GenericBuild(string[] scenes, string target_path, BuildTargetGroup buildTargetGroup, BuildTarget build_target, BuildOptions build_options, string buildReportFileName = "BuildReport")
