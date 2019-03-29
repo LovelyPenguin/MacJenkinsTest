@@ -50,7 +50,7 @@ public class GetCSVData {
     {
         CSVSave();
         CSVOpen();
-        bundleVersion = setBundleVersionCode;
+        bundleVersion = setBundleVersionCode + 1;
         version = setVersion;
     }
 }
