@@ -9,15 +9,15 @@ public class DisplayVersion : MonoBehaviour {
     private Text bundleVersionText;
     [SerializeField]
     private Text versionText;
+    
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        versionText.text = Application.version;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        //bundleVersionText.text = Application.version;
-        versionText.text = Application.version;
+        //bundleVersionText.text = Application.;
     }
 }
