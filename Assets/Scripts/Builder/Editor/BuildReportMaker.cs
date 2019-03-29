@@ -34,7 +34,7 @@ public class BuildReportMaker
     public string MakeFileNameFromDate(string prefix_name)
     {
         DateTime currentTIme = DateTime.Now;
-        string dateToFileName = string.Format("{0:yyyy-MM-dd-HHmmss}", currentTIme);
+        string dateToFileName = string.Format("{0:yyyy.MM.dd(HH:mm:ss)}", currentTIme);
 
         return prefix_name + string.Format("_{0}", dateToFileName);
     }

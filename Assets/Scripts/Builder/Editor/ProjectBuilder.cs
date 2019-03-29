@@ -13,11 +13,11 @@ public class ProjectBuilder
 
     // 번들버전 코드는 무조건 int형으로 만들어야 함!
     // 번들버전코드는 절대 중복되지도 못하고 절대 이전보다 낮은 숫자로는 변경할 수는 없음
-    static int bundleVersionCode = 10;
+    static int bundleVersionCode;
 
     // 마켓에서 보이는 버전코드인데 수정하지 않더라도 괜찮음
     // 마켓 업데이트가 보이기 때문에 몰래 업데이트는 못하겠지만 사용자가 신경 못쓴다면 잠수함 패치가 가능함
-    static float gameVersion = 0.5f;
+    static float gameVersion;
 
     private static string[] FindEnabledEditorScene()
     {
@@ -40,41 +40,37 @@ public class ProjectBuilder
         PlayerSettings.bundleVersion = gameVersion.ToString();
 
         //string androidDir = "/Android";
-        string androidDir = "/output";
+        string androidDir = "/Output";
 
         char sep = Path.DirectorySeparatorChar;
-        string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.Android.bundleVersionCode);
+        string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion);
         DirectoryInfo di = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
+        DirectoryInfo backupDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + "Backup");
         //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
 
-        if (di.Exists == false)
+        // Output 디렉토리가 없을때
+        if (!di.Exists)
             di.Create();
-
-        // 번들버전이 같으면 앱이 올라가지 않으니 날짜를 이용해서 빌드버전을 올리는 모양이다.
-        //PlayerSettings.Android.bundleVersionCode = (Int32)(DateTime.UtcNow.Subtract(new DateTime(2000, 2, 22))).TotalSeconds;
+        // Backup 디렉토리가 없을때
+        if (!backupDirectory.Exists)
+            backupDirectory.Create();
 
         //set the other settings from environment variables
-        /*
         PlayerSettings.Android.keystoreName = Environment.GetEnvironmentVariable("ANDROID_KEYSTORE_NAME");
         PlayerSettings.Android.keystorePass = Environment.GetEnvironmentVariable("ANDROID_KEYSTORE_PASSWORD");
         PlayerSettings.Android.keyaliasName = Environment.GetEnvironmentVariable("ANDROID_KEYALIAS_NAME");
         PlayerSettings.Android.keyaliasPass = Environment.GetEnvironmentVariable("ANDROID_KEYALIAS_PASSWORD");
-        */
-        // 환경변수로 하는 방법이 먹히지 않아 직접적으로 입력해줌
-        PlayerSettings.Android.keystoreName = "/Users/Shared/Jenkins/Development/VoxellersTestKey.keystore";
-        PlayerSettings.Android.keystorePass = "woong8589";
-        PlayerSettings.Android.keyaliasName = "key0";
-        PlayerSettings.Android.keyaliasPass = "woong8589";
 
-        GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport");
+        GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport" + "_" + PlayerSettings.Android.bundleVersionCode + "_" + PlayerSettings.bundleVersion);
     }
 
     static void GenericBuild(string[] scenes, string target_path, BuildTargetGroup buildTargetGroup, BuildTarget build_target, BuildOptions build_options, string buildReportFileName = "BuildReport")
     {
         // 날짜 포맷 결정 방법은 아래 참고.
         // http://www.csharpstudy.com/Tip/Tip-datetime-format.aspx
+        // 이거 안쓰이는 것 같은데?
         DateTime currentTIme = DateTime.Now;
-        string dateToFileName = string.Format("{0:yyyy-MM-dd-HHmmss}", currentTIme);
+        string dateToFileName = string.Format("{0:yyyy.MM.dd(HHmmss)}", currentTIme);
 
         // identifier 설정. iOS와 Android 모두 하나의 세팅으로 해결 가능한 것으로 보임.
         PlayerSettings.applicationIdentifier = "com.Voxellers.JenkinsTestBuild"; // 빌드 세팅에 필요한 해당 정보 등은 특정한 Custom Editor로 모아 편집이 가능하도록 수정해야할 것으로 보임.
