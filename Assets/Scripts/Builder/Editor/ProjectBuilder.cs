@@ -55,10 +55,18 @@ public class ProjectBuilder
         if (!backupDirectory.Exists)
             backupDirectory.Create();
 
+        /*
+        // 젠킨스에선 환경변수가 작동하지 않음
         PlayerSettings.Android.keystoreName = Environment.GetEnvironmentVariable("ANDROID_KEYSTORE_NAME");
         PlayerSettings.Android.keystorePass = Environment.GetEnvironmentVariable("ANDROID_KEYSTORE_PASSWORD");
         PlayerSettings.Android.keyaliasName = Environment.GetEnvironmentVariable("ANDROID_KEYALIAS_NAME");
         PlayerSettings.Android.keyaliasPass = Environment.GetEnvironmentVariable("ANDROID_KEYALIAS_PASSWORD");
+        */
+
+        PlayerSettings.Android.keystoreName = "/Users/Shared/Jenkins/Development/VoxellersTestKey.keystore";
+        PlayerSettings.Android.keystorePass = "woong8589";
+        PlayerSettings.Android.keyaliasName = "key0";
+        PlayerSettings.Android.keyaliasPass = "woong8589";
 
         GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport" + "_" + PlayerSettings.Android.bundleVersionCode + "_" + PlayerSettings.bundleVersion);
     }
