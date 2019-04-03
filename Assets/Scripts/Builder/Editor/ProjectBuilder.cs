@@ -45,16 +45,15 @@ public class ProjectBuilder
         char sep = Path.DirectorySeparatorChar;
         string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion);
         string copyAndMove = Path.GetFullPath(".") + sep + TARGET_DIR + "/Backup" + string.Format("/AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion);
-        DirectoryInfo di = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
+
+        DirectoryInfo outputDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
         DirectoryInfo backupDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + "/Backup");
         //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
 
         // Output 디렉토리가 없을때
-        if (!di.Exists)
-            di.Create();
+        FolderSershAndCreate(outputDirectory);
         // Backup 디렉토리가 없을때
-        if (!backupDirectory.Exists)
-            backupDirectory.Create();
+        FolderSershAndCreate(backupDirectory);
 
         /*
         // 젠킨스에선 환경변수가 작동하지 않음
@@ -98,6 +97,13 @@ public class ProjectBuilder
 
         // 빌드 번호 설정해줘야 함.
         BuildReportMaker buildReportMaker = new BuildReportMaker(buildReportFileName, res, REPORT_TARGET_PATH);
+    }
+
+    // 폴더가 있는지 검사하고 없으면 만들어주는 함수
+    static private void FolderSershAndCreate(DirectoryInfo folder)
+    {
+        if (!folder.Exists)
+            folder.Create();
     }
 
     [MenuItem("Custom/CI/Build PC")]
