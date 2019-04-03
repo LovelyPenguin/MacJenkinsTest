@@ -71,7 +71,7 @@ public class ProjectBuilder
 
         GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport" + "_" + PlayerSettings.Android.bundleVersionCode + "_" + PlayerSettings.bundleVersion);
 
-        // /Output에서 나온 앱을 Backup폴더로 복사
+        // /Output에서 나온 앱을 Backup폴더로 복사함
         File.Copy(BUILD_TARGET_PATH, copyAndMove, false);
     }
 
