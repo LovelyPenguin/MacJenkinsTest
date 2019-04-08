@@ -29,7 +29,7 @@ public class BenchMarkMngScript : MonoBehaviour
             Debug.LogError("frameRate or ElapsedTime가 비어있습니다.");
         }
 		deviceNameText.text = 
-		"Device Name : " + SystemInfo.deviceName + "\n" + 
+		"Device Name : " + SystemInfo.deviceModel + "\n" + 
 		"Processor : " + SystemInfo.processorType + "\n" +
 		"Memory Size : " + SystemInfo.systemMemorySize + "\n" +
 		"Graphics Processor : " + SystemInfo.graphicsDeviceName + "\n" +
