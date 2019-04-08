@@ -23,8 +23,15 @@ public class BenchMarkMngScript : MonoBehaviour
     // 기록의 기준이 될 최저 프레임
     [SerializeField]
     private float targetFrameRate;
+    // 벤치마크 대기 시간
+    [SerializeField]
+    private float disableTime = 2f;
 
     private bool testAvailable = true;
+    private float saveFrameRate = 0f;
+    private float minimumFrameRate;
+    private float maximumFrameRate;
+	private float averageFrameRate = 0f;
     void Start()
     {
         Debug.Log("BenchMark Kit Start");
@@ -38,8 +45,11 @@ public class BenchMarkMngScript : MonoBehaviour
         "Memory Size : " + SystemInfo.systemMemorySize + "\n" +
         "Graphics Processor : " + SystemInfo.graphicsDeviceName + "\n" +
         "Graphics Memory Size : " + SystemInfo.graphicsMemorySize;
+
         currentFrame = 0f;
         currentTime = 0f;
+        maximumFrameRate = 0f;
+        minimumFrameRate = 60f;
     }
 
     void Update()
@@ -48,7 +58,8 @@ public class BenchMarkMngScript : MonoBehaviour
         {
             Time.timeScale = 0f;
             testAvailable = false;
-            Debug.Log("Test End");
+			averageFrameRate = maximumFrameRate + minimumFrameRate / 2;
+            Debug.Log("Average Frame Rate : " + averageFrameRate);
         }
 
         if (testAvailable)
@@ -56,9 +67,13 @@ public class BenchMarkMngScript : MonoBehaviour
             UpdateText();
         }
 
-        if (currentFrame < targetFrameRate && currentTime >= 2f && testAvailable)
+        if (currentTime >= disableTime)
         {
-            WriteFrameLog();
+            GetMinMaxFrameRate();
+            if (currentFrame < targetFrameRate && testAvailable)
+            {
+                WriteFrameLog();
+            }
         }
     }
 
@@ -77,5 +92,25 @@ public class BenchMarkMngScript : MonoBehaviour
         tempText = "Time : " + currentTime + "\n" + "Frame : " + currentFrame + "\n" + "-----------------" + "\n";
         frameLogText.text += tempText;
         Debug.LogWarning(tempText);
+    }
+
+    private void GetMinMaxFrameRate()
+    {
+        if (maximumFrameRate < currentFrame)
+		{
+            maximumFrameRate = currentFrame;
+			Debug.Log("Maximum Frame Rate : " + maximumFrameRate);
+		}
+
+        if (minimumFrameRate > currentFrame)
+		{
+            minimumFrameRate = currentFrame;
+			Debug.Log("Minimum Frame Rate : " + minimumFrameRate);
+		}
+    }
+
+    private void GetMinimumFrameRate()
+    {
+
     }
 }
