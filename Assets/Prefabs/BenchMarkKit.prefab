@@ -519,6 +519,7 @@ MonoBehaviour:
   frameLogText: {fileID: 114162890167298302}
   targetTime: 30
   targetFrameRate: 30
+  testOb: {fileID: 1221760278767254, guid: 4bc71df9b7d0ac448b91040e80b74971, type: 2}
 --- !u!114 &114826476355835748
 MonoBehaviour:
   m_ObjectHideFlags: 1
