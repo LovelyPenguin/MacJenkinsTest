@@ -11,6 +11,8 @@ public class BenchMarkMngScript : MonoBehaviour
     private TextMeshProUGUI elapsedTimeText;
 	[SerializeField]
 	private TextMeshProUGUI deviceNameText;
+	[SerializeField]
+	private TextMeshProUGUI frameLogText;
 
     private float currentTime;
     private float currentFrame;
@@ -24,6 +26,7 @@ public class BenchMarkMngScript : MonoBehaviour
     private float targetFrameRate;
     void Start()
     {
+		Debug.Log("BenchMark Kit Start");
         if (frameRateText == null || elapsedTimeText == null)
         {
             Debug.LogError("frameRate or ElapsedTime가 비어있습니다.");
@@ -40,7 +43,23 @@ public class BenchMarkMngScript : MonoBehaviour
 
     void Update()
     {
-		currentFrame += Time.deltaTime;
-		elapsedTimeText.text = currentFrame.ToString();
+		currentFrame = (int)(1f / Time.unscaledDeltaTime);
+		frameRateText.text = currentFrame.ToString();
+
+		currentTime += Time.deltaTime;
+		elapsedTimeText.text = currentTime.ToString();
+
+		if (currentTime >= targetTime)
+		{
+			Time.timeScale = 0f;
+			Debug.Log("Test End");
+		}
+		if (currentFrame < targetFrameRate && currentTime >= 2f)
+		{
+			string tempText;
+			tempText = "Time : " + currentTime + "\n" + "Frame : " + currentFrame + "\n" + "-----------------" + "\n";
+			frameLogText.text += tempText;
+			Debug.LogWarning(tempText);
+		}
     }
 }
