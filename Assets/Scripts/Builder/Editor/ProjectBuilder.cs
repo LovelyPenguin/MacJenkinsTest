@@ -10,6 +10,7 @@ public class ProjectBuilder
 {
     static string[] SCENES = FindEnabledEditorScene();
     static string TARGET_DIR = "Build";
+    static string buildDivision;
 
     // 번들버전 코드는 무조건 int형으로 만들어야 함!
     // 번들버전코드는 절대 중복되지도 못하고 절대 이전보다 낮은 숫자로는 변경할 수는 없음
@@ -43,8 +44,8 @@ public class ProjectBuilder
         string androidDir = "/Output";
 
         char sep = Path.DirectorySeparatorChar;
-        string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion);
-        string copyAndMove = Path.GetFullPath(".") + sep + TARGET_DIR + "/Backup" + string.Format("/AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion);
+        string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/{2}AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion, buildDivision);
+        string copyAndMove = Path.GetFullPath(".") + sep + TARGET_DIR + "/Backup" + string.Format("/{2}AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion, buildDivision);
 
         DirectoryInfo outputDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
         DirectoryInfo backupDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + "/Backup");
@@ -92,8 +93,7 @@ public class ProjectBuilder
         string REPORT_TARGET_PATH = Path.GetFullPath(".") + sep + "/BuildReport";
 
         DirectoryInfo di = new DirectoryInfo(REPORT_TARGET_PATH);
-        if (di.Exists == false)
-            di.Create();
+        FolderSershAndCreate(di);
 
         // 빌드 번호 설정해줘야 함.
         BuildReportMaker buildReportMaker = new BuildReportMaker(buildReportFileName, res, REPORT_TARGET_PATH);
@@ -120,6 +120,13 @@ public class ProjectBuilder
     [MenuItem("Custom/CI/Build_Android")]
     static void PerformAndroidBuildClient()
     {
+        buildDivision = "Regular";
+        AndroidBuild();
+    }
+
+    static void RegularAndroidBuild()
+    {
+        buildDivision = "Irregular";
         AndroidBuild();
     }
 
