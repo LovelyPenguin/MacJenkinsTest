@@ -56,7 +56,7 @@ public class BenchMarkMngScript : MonoBehaviour
         }
         deviceNameText.text =
         "Device Name : " + SystemInfo.deviceModel + "\n" +
-        "Processor : " + SystemInfo.processorType + "\n" +
+        "Processor : " + SystemInfo.processorType + " " + SystemInfo.processorFrequency * 0.001f + " Ghz " + SystemInfo.processorCount + " Thread" + "\n" +
         "Memory Size : " + SystemInfo.systemMemorySize + "\n" +
         "Graphics Processor : " + SystemInfo.graphicsDeviceName + "\n" +
         "Graphics Memory Size : " + SystemInfo.graphicsMemorySize;
