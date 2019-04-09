@@ -80,7 +80,7 @@ public class BenchMarkMngScript : MonoBehaviour
         if (currentTime >= disableTime)
         {
             GetMinMaxFrameRate();
-            
+
             maxFrameRateText.text = maximumFrameRate.ToString();
             minFrameRateText.text = minimumFrameRate.ToString();
 
@@ -124,6 +124,10 @@ public class BenchMarkMngScript : MonoBehaviour
         if (maximumFrameRate < currentFrame)
         {
             maximumFrameRate = currentFrame;
+
+            // 어짜피 모바일 기기에서 60fps를 넘겨봤자 의미가 없음 오히려 평균을 구할때 방해만 되기에 제한함
+            if (maximumFrameRate > 60)
+                maximumFrameRate = 60;
             Debug.Log("Maximum Frame Rate : " + maximumFrameRate);
         }
 
