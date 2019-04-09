@@ -73,6 +73,7 @@ public class BenchMarkMngScript : MonoBehaviour
             Debug.Log("Average Frame Rate : " + averageFrameRate);
             //TakeScreenShot();
             StartCoroutine(captureScreenshot());
+            RefreshGallery();
         }
 
         // Benchmark Running
@@ -183,5 +184,14 @@ public class BenchMarkMngScript : MonoBehaviour
             System.IO.File.WriteAllBytes(path, imageBytes);
             screenShot = false;
         }
+    }
+
+    private void RefreshGallery()
+    {
+        AndroidJavaClass classPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject objActivity = classPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+        AndroidJavaClass classUri = new AndroidJavaClass("android.net.Uri");
+        AndroidJavaObject objIntent = new AndroidJavaObject("android.content.Intent", new object[2]{"android.intent.action.MEDIA_SCANNER_SCAN_FILE", classUri.CallStatic<AndroidJavaObject>("parse", "/mnt/sdcard/DCIM/BenchmarkResult/")});
+        objActivity.Call ("sendBroadcast", objIntent);
     }
 }
