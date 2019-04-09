@@ -97,11 +97,6 @@ public class BenchMarkMngScript : MonoBehaviour
                 WriteFrameLog();
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(captureScreenshot());
-        }
     }
 
     private void UpdateText()
@@ -140,20 +135,20 @@ public class BenchMarkMngScript : MonoBehaviour
         }
     }
 
-    private void TakeScreenShot()
-    {
-        if (screenShot)
-        {
-            // 에디터에선 이상하게 에러가 뜨는데 모바일에선 정상 작동함
-            Debug.Log("Take Screenshot");
-            string drive = "/mnt/sdcard/DCIM/";
-            string timeStamp = System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)");
-            string text = drive + "BenchmarkReult" + timeStamp + ".png";
-            string pathToSave = text;
-            ScreenCapture.CaptureScreenshot(pathToSave, 1);
-            screenShot = false;
-        }
-    }
+    // private void TakeScreenShot()
+    // {
+    //     if (screenShot)
+    //     {
+    //         // 에디터에선 이상하게 에러가 뜨는데 모바일에선 정상 작동함
+    //         Debug.Log("Take Screenshot");
+    //         string drive = "/mnt/sdcard/DCIM/";
+    //         string timeStamp = System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)");
+    //         string text = drive + "BenchmarkReult" + timeStamp + ".png";
+    //         string pathToSave = text;
+    //         ScreenCapture.CaptureScreenshot(pathToSave, 1);
+    //         screenShot = false;
+    //     }
+    // }
 
     IEnumerator captureScreenshot()
     {
