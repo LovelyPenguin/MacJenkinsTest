@@ -20,6 +20,8 @@ public class BenchMarkMngScript : MonoBehaviour
     private TextMeshProUGUI minFrameRateText;
     [SerializeField]
     private TextMeshProUGUI avgFrameRateText;
+    [SerializeField]
+    private TextMeshProUGUI benchmarkEndText;
 
     private float currentTime;
     private float currentFrame;
@@ -76,6 +78,7 @@ public class BenchMarkMngScript : MonoBehaviour
             //TakeScreenShot();
             StartCoroutine(captureScreenshot());
             RefreshGallery();
+            benchmarkEndText.enabled = true;
         }
 
         // Benchmark Running
@@ -188,12 +191,19 @@ public class BenchMarkMngScript : MonoBehaviour
         }
     }
 
+    // 앨범 새로고침 기능 들어보니 안드로이드든 iOS든 다 작동한다고 한다.
+    // 이거 없으면 스샷 볼때마다 폰 껐다 켜야함
     private void RefreshGallery()
     {
         AndroidJavaClass classPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject objActivity = classPlayer.GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaClass classUri = new AndroidJavaClass("android.net.Uri");
-        AndroidJavaObject objIntent = new AndroidJavaObject("android.content.Intent", new object[2]{"android.intent.action.MEDIA_SCANNER_SCAN_FILE", classUri.CallStatic<AndroidJavaObject>("parse", "file://" + screenshotPath)});
+        
+        AndroidJavaObject objIntent = 
+        new AndroidJavaObject("android.content.Intent", 
+        new object[2]{"android.intent.action.MEDIA_SCANNER_SCAN_FILE", 
+        classUri.CallStatic<AndroidJavaObject>("parse", "file://" + screenshotPath)});
+
         objActivity.Call ("sendBroadcast", objIntent);
     }
 }
