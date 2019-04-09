@@ -71,8 +71,8 @@ public class BenchMarkMngScript : MonoBehaviour
             Time.timeScale = 0f;
             testAvailable = false;
             Debug.Log("Average Frame Rate : " + averageFrameRate);
-            //TakeScreenShot();
-            StartCoroutine(captureScreenshot());
+            TakeScreenShot();
+            //StartCoroutine(captureScreenshot());
         }
 
         // Benchmark Running
@@ -135,20 +135,27 @@ public class BenchMarkMngScript : MonoBehaviour
         }
     }
 
-    // private void TakeScreenShot()
-    // {
-    //     if (screenShot)
-    //     {
-    //         // 에디터에선 이상하게 에러가 뜨는데 모바일에선 정상 작동함
-    //         Debug.Log("Take Screenshot");
-    //         string drive = "/mnt/sdcard/DCIM/";
-    //         string timeStamp = System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)");
-    //         string text = drive + "BenchmarkReult" + timeStamp + ".png";
-    //         string pathToSave = text;
-    //         ScreenCapture.CaptureScreenshot(pathToSave, 1);
-    //         screenShot = false;
-    //     }
-    // }
+    private void TakeScreenShot()
+    {
+        if (screenShot)
+        {
+            // 에디터에선 이상하게 에러가 뜨는데 모바일에선 정상 작동함
+            // 사용하기 전 SD카드 권한을 획득해야 함
+            Debug.Log("Take Screenshot");
+            string drive = "/mnt/sdcard/DCIM/BenchmarkResult/";
+
+            DirectoryInfo di = new DirectoryInfo(drive);
+
+            if (di.Exists == false)
+                di.Create();
+
+            string timeStamp = System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)");
+            string text = drive + "BenchmarkReult" + timeStamp + ".png";
+            string pathToSave = text;
+            ScreenCapture.CaptureScreenshot(pathToSave, 1);
+            screenShot = false;
+        }
+    }
 
     IEnumerator captureScreenshot()
     {
