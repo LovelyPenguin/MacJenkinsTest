@@ -10,6 +10,7 @@ public class ProjectBuilder
 {
     static string[] SCENES = FindEnabledEditorScene();
     static string TARGET_DIR = "Build";
+    static string TEMP_DIR = "Temp";
     static string buildDivision;
     static string buildBackupDivisionLocation;
 
@@ -45,17 +46,20 @@ public class ProjectBuilder
         string androidDir = "/Output";
 
         char sep = Path.DirectorySeparatorChar;
-        string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + androidDir + string.Format("/{2}AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion, buildDivision);
+        string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TEMP_DIR + string.Format("/{2}AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion, buildDivision);
         string copyAndMove = Path.GetFullPath(".") + sep + TARGET_DIR + buildBackupDivisionLocation + string.Format("/{2}AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion, buildDivision);
 
         DirectoryInfo outputDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
         DirectoryInfo backupDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + buildBackupDivisionLocation);
+        DirectoryInfo tempDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TEMP_DIR);
         //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
 
         // Output 디렉토리가 없을때
         FolderSershAndCreate(outputDirectory);
         // Backup 디렉토리가 없을때
         FolderSershAndCreate(backupDirectory);
+        // Temp 디렉토리가 없을때 
+        FolderSershAndCreate(tempDirectory);
 
         /*
         // 젠킨스에선 환경변수가 작동하지 않음
@@ -122,14 +126,14 @@ public class ProjectBuilder
     static void PerformAndroidBuildClient()
     {
         buildDivision = "Irregular";
-        buildBackupDivisionLocation = "/IrregularVersionBackup";
+        buildBackupDivisionLocation = "/IrregularBuildBackup";
         AndroidBuild();
     }
 
     static void RegularAndroidBuild()
     {
         buildDivision = "Regular";
-        buildBackupDivisionLocation = "/RegularVersionBackup";
+        buildBackupDivisionLocation = "/RegularBuildBackup";
         AndroidBuild();
     }
 
