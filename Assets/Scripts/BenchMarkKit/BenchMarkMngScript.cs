@@ -95,6 +95,7 @@ public class BenchMarkMngScript : MonoBehaviour
             if (currentFrame < targetFrameRate && testAvailable)
             {
                 WriteFrameLog();
+                StartCoroutine(captureScreenshot());
             }
         }
     }
