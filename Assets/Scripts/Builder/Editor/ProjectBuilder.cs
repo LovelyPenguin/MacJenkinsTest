@@ -46,7 +46,7 @@ public class ProjectBuilder
         string androidDir = "/Output";
 
         char sep = Path.DirectorySeparatorChar;
-        string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TEMP_DIR + string.Format("/{2}AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion, buildDivision);
+        string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/{2}AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion, buildDivision);
         string copyAndMove = Path.GetFullPath(".") + sep + TARGET_DIR + buildBackupDivisionLocation + string.Format("/{2}AndroidBuild_{0}_{1}.apk", PlayerSettings.Android.bundleVersionCode, PlayerSettings.bundleVersion, buildDivision);
 
         DirectoryInfo outputDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
