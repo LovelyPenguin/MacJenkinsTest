@@ -40,6 +40,8 @@ public class BenchMarkMngScript : MonoBehaviour
     private float minimumFrameRate;
     private float maximumFrameRate;
     private float averageFrameRate = 0f;
+
+    private string screenshotPath;
     void Start()
     {
         // 재시작 했을 경우를 대비함
@@ -171,7 +173,7 @@ public class BenchMarkMngScript : MonoBehaviour
             if (di.Exists == false)
                 di.Create();
 
-            string path = albumPath + "Benchmark" + System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)") + ".jpeg";
+            screenshotPath = albumPath + "Benchmark" + System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)") + ".jpeg";
 
             Texture2D screenImage = new Texture2D(Screen.width, Screen.height);
             //Get Image from screen
@@ -181,7 +183,7 @@ public class BenchMarkMngScript : MonoBehaviour
             byte[] imageBytes = screenImage.EncodeToPNG();
 
             //Save image to file
-            System.IO.File.WriteAllBytes(path, imageBytes);
+            System.IO.File.WriteAllBytes(screenshotPath, imageBytes);
             screenShot = false;
         }
     }
@@ -191,7 +193,7 @@ public class BenchMarkMngScript : MonoBehaviour
         AndroidJavaClass classPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject objActivity = classPlayer.GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaClass classUri = new AndroidJavaClass("android.net.Uri");
-        AndroidJavaObject objIntent = new AndroidJavaObject("android.content.Intent", new object[2]{"android.intent.action.MEDIA_SCANNER_SCAN_FILE", classUri.CallStatic<AndroidJavaObject>("parse", "/mnt/sdcard/DCIM/BenchmarkResult/")});
+        AndroidJavaObject objIntent = new AndroidJavaObject("android.content.Intent", new object[2]{"android.intent.action.MEDIA_SCANNER_SCAN_FILE", classUri.CallStatic<AndroidJavaObject>("parse", "file://" + screenshotPath)});
         objActivity.Call ("sendBroadcast", objIntent);
     }
 }
