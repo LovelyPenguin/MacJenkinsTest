@@ -41,6 +41,9 @@ public class BenchMarkMngScript : MonoBehaviour
     private float averageFrameRate = 0f;
     void Start()
     {
+        // 재시작 했을 경우를 대비함
+        Time.timeScale = 1f;
+
         Debug.Log("BenchMark Kit Start");
         if (frameRateText == null || elapsedTimeText == null)
         {
@@ -142,9 +145,11 @@ public class BenchMarkMngScript : MonoBehaviour
     {
         if (screenShot)
         {
+            // 에디터에선 이상하게 에러가 뜨는데 모바일에선 정상 작동함
             Debug.Log("Take Screenshot");
-            string timeStamp = System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-            string text = "BenchmarkReult" + timeStamp + ".png";
+            string drive = "/mnt/sdcard/DCIM/";
+            string timeStamp = System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)");
+            string text = drive + "BenchmarkReult" + timeStamp + ".png";
             string pathToSave = text;
             ScreenCapture.CaptureScreenshot(pathToSave, 1);
             screenShot = false;
