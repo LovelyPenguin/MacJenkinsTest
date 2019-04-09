@@ -95,7 +95,8 @@ public class BenchMarkMngScript : MonoBehaviour
             if (currentFrame < targetFrameRate && testAvailable)
             {
                 WriteFrameLog();
-                StartCoroutine(captureScreenshot());
+                // 스크린샷 찍을때 프레임이 드랍된다
+                //StartCoroutine(captureScreenshot());
             }
         }
     }
