@@ -70,7 +70,8 @@ public class BenchMarkMngScript : MonoBehaviour
             Time.timeScale = 0f;
             testAvailable = false;
             Debug.Log("Average Frame Rate : " + averageFrameRate);
-            TakeScreenShot();
+            //TakeScreenShot();
+            StartCoroutine(captureScreenshot());
         }
 
         // Benchmark Running
@@ -98,10 +99,7 @@ public class BenchMarkMngScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // string text = "BenchmarkEnd" + System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)") + ".png";
-            // ScreenCapture.CaptureScreenshot(text, 1);
-
-            Debug.Log(Application.persistentDataPath);
+            StartCoroutine(captureScreenshot());
         }
     }
 
@@ -154,5 +152,21 @@ public class BenchMarkMngScript : MonoBehaviour
             ScreenCapture.CaptureScreenshot(pathToSave, 1);
             screenShot = false;
         }
+    }
+
+    IEnumerator captureScreenshot()
+    {
+        yield return new WaitForEndOfFrame();
+        string path = "/mnt/sdcard/DCIM/" + "Benchmark" + System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)") + ".jpeg";
+
+        Texture2D screenImage = new Texture2D(Screen.width, Screen.height);
+        //Get Image from screen
+        screenImage.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+        screenImage.Apply();
+        //Convert to png
+        byte[] imageBytes = screenImage.EncodeToPNG();
+
+        //Save image to file
+        System.IO.File.WriteAllBytes(path, imageBytes);
     }
 }
