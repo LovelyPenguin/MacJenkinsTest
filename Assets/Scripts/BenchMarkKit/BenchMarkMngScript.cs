@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using TMPro;
 
@@ -157,7 +158,13 @@ public class BenchMarkMngScript : MonoBehaviour
     IEnumerator captureScreenshot()
     {
         yield return new WaitForEndOfFrame();
-        string path = "/mnt/sdcard/DCIM/" + "Benchmark" + System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)") + ".jpeg";
+        string albumPath = "/mnt/sdcard/DCIM/BenchmarkResult/";
+        DirectoryInfo di = new DirectoryInfo(albumPath);
+
+        if (di.Exists == false)
+            di.Create();
+
+        string path = albumPath + "Benchmark" + System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)") + ".jpeg";
 
         Texture2D screenImage = new Texture2D(Screen.width, Screen.height);
         //Get Image from screen
