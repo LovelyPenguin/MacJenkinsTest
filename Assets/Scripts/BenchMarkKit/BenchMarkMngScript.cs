@@ -143,8 +143,10 @@ public class BenchMarkMngScript : MonoBehaviour
         if (screenShot)
         {
             Debug.Log("Take Screenshot");
-            string text = "BenchmarkEnd" + System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)") + ".png";
-            ScreenCapture.CaptureScreenshot("BenchMark.png", 1);
+            string timeStamp = System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            string text = "BenchmarkReult" + timeStamp + ".png";
+            string pathToSave = text;
+            ScreenCapture.CaptureScreenshot(pathToSave, 1);
             screenShot = false;
         }
     }
