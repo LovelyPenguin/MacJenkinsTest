@@ -13,6 +13,12 @@ public class BenchMarkMngScript : MonoBehaviour
     private TextMeshProUGUI deviceNameText;
     [SerializeField]
     private TextMeshProUGUI frameLogText;
+    [SerializeField]
+    private TextMeshProUGUI maxFrameRateText;
+    [SerializeField]
+    private TextMeshProUGUI minFrameRateText;
+    [SerializeField]
+    private TextMeshProUGUI avgFrameRateText;
 
     private float currentTime;
     private float currentFrame;
@@ -28,10 +34,11 @@ public class BenchMarkMngScript : MonoBehaviour
     private float disableTime = 2f;
 
     private bool testAvailable = true;
+    private bool screenShot = true;
     private float saveFrameRate = 0f;
     private float minimumFrameRate;
     private float maximumFrameRate;
-	private float averageFrameRate = 0f;
+    private float averageFrameRate = 0f;
     void Start()
     {
         Debug.Log("BenchMark Kit Start");
@@ -54,26 +61,44 @@ public class BenchMarkMngScript : MonoBehaviour
 
     void Update()
     {
+        // Benchmark End
         if (currentTime >= targetTime)
         {
             Time.timeScale = 0f;
             testAvailable = false;
-			averageFrameRate = maximumFrameRate + minimumFrameRate / 2;
             Debug.Log("Average Frame Rate : " + averageFrameRate);
+            TakeScreenShot();
         }
 
+        // Benchmark Running
         if (testAvailable)
         {
             UpdateText();
         }
 
+        // Benchmark running after 2 second
         if (currentTime >= disableTime)
         {
             GetMinMaxFrameRate();
+            
+            maxFrameRateText.text = maximumFrameRate.ToString();
+            minFrameRateText.text = minimumFrameRate.ToString();
+
+            averageFrameRate = (maximumFrameRate + minimumFrameRate) / 2;
+            avgFrameRateText.text = averageFrameRate.ToString();
+
             if (currentFrame < targetFrameRate && testAvailable)
             {
                 WriteFrameLog();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // string text = "BenchmarkEnd" + System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)") + ".png";
+            // ScreenCapture.CaptureScreenshot(text, 1);
+
+            Debug.Log(Application.persistentDataPath);
         }
     }
 
@@ -89,7 +114,7 @@ public class BenchMarkMngScript : MonoBehaviour
     private void WriteFrameLog()
     {
         string tempText;
-        tempText = "Time : " + currentTime + "\n" + "Frame : " + currentFrame + "\n" + "-----------------" + "\n";
+        tempText = "Time : " + currentTime + ", " + "Frame : " + currentFrame + "\n";
         frameLogText.text += tempText;
         Debug.LogWarning(tempText);
     }
@@ -97,20 +122,26 @@ public class BenchMarkMngScript : MonoBehaviour
     private void GetMinMaxFrameRate()
     {
         if (maximumFrameRate < currentFrame)
-		{
+        {
             maximumFrameRate = currentFrame;
-			Debug.Log("Maximum Frame Rate : " + maximumFrameRate);
-		}
+            Debug.Log("Maximum Frame Rate : " + maximumFrameRate);
+        }
 
         if (minimumFrameRate > currentFrame)
-		{
+        {
             minimumFrameRate = currentFrame;
-			Debug.Log("Minimum Frame Rate : " + minimumFrameRate);
-		}
+            Debug.Log("Minimum Frame Rate : " + minimumFrameRate);
+        }
     }
 
-    private void GetMinimumFrameRate()
+    private void TakeScreenShot()
     {
-
+        if (screenShot)
+        {
+            Debug.Log("Take Screenshot");
+            string text = "BenchmarkEnd" + System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)") + ".png";
+            ScreenCapture.CaptureScreenshot(text, 1);
+            screenShot = false;
+        }
     }
 }
