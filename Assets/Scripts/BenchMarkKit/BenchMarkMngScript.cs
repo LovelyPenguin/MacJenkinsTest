@@ -182,7 +182,7 @@ public class BenchMarkMngScript : MonoBehaviour
             if (di.Exists == false)
                 di.Create();
 
-            screenshotPath = albumPath + "Benchmark" + System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)") + ".jpeg";
+            screenshotPath = albumPath + SystemInfo.deviceModel + "Benchmark" + System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)") + ".jpeg";
 
             Texture2D screenImage = new Texture2D(Screen.width, Screen.height);
             //Get Image from screen
