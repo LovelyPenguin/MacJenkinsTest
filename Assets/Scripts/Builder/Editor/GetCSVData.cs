@@ -4,7 +4,8 @@ using System.IO;
 using UnityEditor;
 //using UnityEngine;
 
-public class GetCSVData {
+public class GetCSVData
+{
 
     static string csvFilePath = "/Users/Shared/Jenkins/Development/VersionSheet.csv";
 
@@ -41,9 +42,11 @@ public class GetCSVData {
         csvFilePath = csvFilePath.Replace(".txt", ".csv");
     }
 
+    // 파일의 확장자 변경
+    // 담부턴 주석 좀 잘 쓰자
     private static void ChangeToTextFile(string filePath, string changeExtention)
     {
-        File.Move(csvFilePath, Path.ChangeExtension(filePath, changeExtention));
+        File.Move(filePath, Path.ChangeExtension(filePath, changeExtention));
     }
 
     public void GetNewVersion(out int bundleVersion, out float version)

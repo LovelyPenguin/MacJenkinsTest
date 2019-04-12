@@ -74,7 +74,7 @@ public class BenchMarkMngScript : MonoBehaviour
         {
             Time.timeScale = 0f;
             testAvailable = false;
-            Debug.Log("Average Frame Rate : " + averageFrameRate);
+            //Debug.Log("Average Frame Rate : " + averageFrameRate);
             //TakeScreenShot();
             StartCoroutine(captureScreenshot());
             RefreshGallery();
@@ -139,13 +139,13 @@ public class BenchMarkMngScript : MonoBehaviour
             // 어짜피 모바일 기기에서 60fps를 넘겨봤자 의미가 없음 오히려 평균을 구할때 방해만 되기에 제한함
             if (maximumFrameRate > 60)
                 maximumFrameRate = 60;
-            Debug.Log("Maximum Frame Rate : " + maximumFrameRate);
+            //Debug.Log("Maximum Frame Rate : " + maximumFrameRate);
         }
 
         if (minimumFrameRate > currentFrame)
         {
             minimumFrameRate = currentFrame;
-            Debug.Log("Minimum Frame Rate : " + minimumFrameRate);
+            //Debug.Log("Minimum Frame Rate : " + minimumFrameRate);
         }
     }
 
@@ -197,9 +197,8 @@ public class BenchMarkMngScript : MonoBehaviour
         }
     }
 
-    // 앨범 새로고침 기능 들어보니 안드로이드든 iOS든 다 작동한다고 한다.
+    // 앨범 새로고침 기능. 들어보니 안드로이드든 iOS든 다 작동한다고 한다.
     // 이거 없으면 스샷 볼때마다 폰 껐다 켜야함
-    // 다만 구버전에선(ex)젤리빈) 기능하지 않는듯 함
     private void RefreshGallery()
     {
         AndroidJavaClass classPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
