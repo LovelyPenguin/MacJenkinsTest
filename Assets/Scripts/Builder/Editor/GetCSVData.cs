@@ -35,8 +35,8 @@ public class GetCSVData
         using (StreamWriter outputFile = new StreamWriter(csvFilePath, true))
         {
             // outputFile.WriteLine("{0},{1},{2}", System.DateTime.Now.ToString("yyyy.MM.dd") + System.DateTime.Now.ToString("(HH:mm:ss)"), setBundleVersionCode + 1, setVersion);
-            int tempBundleVersion = setBundleVersionCode+1;
-            outputFile.WriteLine("{0},{1},{2}", System.DateTime.Now.ToString("yyyy.MM.dd") + System.DateTime.Now.ToString("(HH:mm:ss)"), setBundleVersionCode+1, setBundleVersionCode+1);
+            //int tempBundleVersion = setBundleVersionCode+1;
+            outputFile.WriteLine("{0},{1},{2}", System.DateTime.Now.ToString("yyyy.MM.dd") + System.DateTime.Now.ToString("(HH:mm:ss)"), setBundleVersionCode+1, setVersion);
         }
         // 코드입력
 
