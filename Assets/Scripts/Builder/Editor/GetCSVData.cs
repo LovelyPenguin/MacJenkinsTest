@@ -37,7 +37,7 @@ public class GetCSVData
             // outputFile.WriteLine("{0},{1},{2}", System.DateTime.Now.ToString("yyyy.MM.dd") + System.DateTime.Now.ToString("(HH:mm:ss)"), setBundleVersionCode + 1, setVersion);
             //int tempBundleVersion = setBundleVersionCode+1;
             string date = System.DateTime.Now.ToString("yyyy.MM.dd") + System.DateTime.Now.ToString("(HH:mm:ss)");
-            outputFile.WriteLine("{0},{1},{2}", date, setBundleVersionCode+1, date + );
+            outputFile.WriteLine("{0},{1},{2}", date, setBundleVersionCode+1, date + "-" + setBundleVersionCode+1);
         }
         // 코드입력
 
