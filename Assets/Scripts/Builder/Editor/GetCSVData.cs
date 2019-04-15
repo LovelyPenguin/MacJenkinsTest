@@ -20,7 +20,7 @@ public class GetCSVData
         {
             //Debug.Log("index " + i.ToString() + ": " + data[i]["Date"] + " " + data[i]["BundleVersionCode"] + " " + data[i]["Version"]);
             setBundleVersionCode = int.Parse(data[i]["BundleVersionCode"].ToString());
-            setVersion = float.Parse(data[i]["Version"].ToString());
+            //setVersion = float.Parse(data[i]["Version"].ToString());
         }
     }
 
@@ -36,7 +36,8 @@ public class GetCSVData
         {
             // outputFile.WriteLine("{0},{1},{2}", System.DateTime.Now.ToString("yyyy.MM.dd") + System.DateTime.Now.ToString("(HH:mm:ss)"), setBundleVersionCode + 1, setVersion);
             //int tempBundleVersion = setBundleVersionCode+1;
-            outputFile.WriteLine("{0},{1},{2}", System.DateTime.Now.ToString("yyyy.MM.dd") + System.DateTime.Now.ToString("(HH:mm:ss)"), setBundleVersionCode+1, setVersion);
+            string date = System.DateTime.Now.ToString("yyyy.MM.dd") + System.DateTime.Now.ToString("(HH:mm:ss)");
+            outputFile.WriteLine("{0},{1},{2}", date, setBundleVersionCode+1, date + );
         }
         // 코드입력
 
