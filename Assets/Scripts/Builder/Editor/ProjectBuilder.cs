@@ -20,7 +20,7 @@ public class ProjectBuilder
 
     // 마켓에서 보이는 버전코드인데 수정하지 않더라도 괜찮음
     // 마켓 업데이트가 보이기 때문에 몰래 업데이트는 못하겠지만 사용자가 신경 못쓴다면 잠수함 패치가 가능함
-    static float gameVersion;
+    static string gameVersion;
 
     private static string[] FindEnabledEditorScene()
     {
