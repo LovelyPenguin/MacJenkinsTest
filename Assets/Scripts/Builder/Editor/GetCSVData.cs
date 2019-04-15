@@ -10,7 +10,7 @@ public class GetCSVData
     static string csvFilePath = "/Users/Shared/Jenkins/Development/VersionSheet.csv";
 
     private int setBundleVersionCode;
-    private float setVersion;
+    private string setVersion;
 
     private void CSVOpen()
     {
@@ -20,7 +20,7 @@ public class GetCSVData
         {
             //Debug.Log("index " + i.ToString() + ": " + data[i]["Date"] + " " + data[i]["BundleVersionCode"] + " " + data[i]["Version"]);
             setBundleVersionCode = int.Parse(data[i]["BundleVersionCode"].ToString());
-            //setVersion = float.Parse(data[i]["Version"].ToString());
+            setVersion = data[i]["Version"].ToString();
         }
     }
 
@@ -53,7 +53,7 @@ public class GetCSVData
         File.Move(filePath, Path.ChangeExtension(filePath, changeExtention));
     }
 
-    public void GetNewVersion(out int bundleVersion, out float version)
+    public void GetNewVersion(out int bundleVersion, out string version)
     {
         CSVSave();
         CSVOpen();
