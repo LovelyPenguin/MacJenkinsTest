@@ -42,7 +42,6 @@ public class ProjectBuilder
         PlayerSettings.Android.bundleVersionCode = bundleVersionCode;
         PlayerSettings.bundleVersion = gameVersion.ToString();
 
-        //string androidDir = "/Android";
         string androidDir = "/Output";
 
         char sep = Path.DirectorySeparatorChar;
@@ -52,27 +51,12 @@ public class ProjectBuilder
         DirectoryInfo outputDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + androidDir);
         DirectoryInfo backupDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TARGET_DIR + buildBackupDivisionLocation);
         DirectoryInfo tempDirectory = new DirectoryInfo(Path.GetFullPath(".") + sep + TEMP_DIR);
-        //string BUILD_TARGET_PATH = Path.GetFullPath(".") + sep + TARGET_DIR + string.Format("/AndroidBuild_{0}.apk", PlayerSettings.bundleVersion);
 
-        // Output 디렉토리가 없을때
         FolderSershAndCreate(outputDirectory);
-        // Backup 디렉토리가 없을때
         FolderSershAndCreate(backupDirectory);
-        // Temp 디렉토리가 없을때 
         FolderSershAndCreate(tempDirectory);
 
-        /*
-        // 젠킨스에선 환경변수가 작동하지 않음
-        PlayerSettings.Android.keystoreName = Environment.GetEnvironmentVariable("ANDROID_KEYSTORE_NAME");
-        PlayerSettings.Android.keystorePass = Environment.GetEnvironmentVariable("ANDROID_KEYSTORE_PASSWORD");
-        PlayerSettings.Android.keyaliasName = Environment.GetEnvironmentVariable("ANDROID_KEYALIAS_NAME");
-        PlayerSettings.Android.keyaliasPass = Environment.GetEnvironmentVariable("ANDROID_KEYALIAS_PASSWORD");
-        */
-
-        PlayerSettings.Android.keystoreName = "/Users/Shared/Jenkins/Development/VoxellersTestKey.keystore";
-        PlayerSettings.Android.keystorePass = "woong8589";
-        PlayerSettings.Android.keyaliasName = "key0";
-        PlayerSettings.Android.keyaliasPass = "woong8589";
+        KeystoreSetting();
 
         GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Android, BuildTarget.Android, option, "Android_BuildReport" + "_" + PlayerSettings.Android.bundleVersionCode + "_" + PlayerSettings.bundleVersion);
 
@@ -111,7 +95,16 @@ public class ProjectBuilder
             folder.Create();
     }
 
-    [MenuItem("Custom/CI/Build PC")]
+    // 맥 전용임
+    static private void KeystoreSetting()
+    {
+        PlayerSettings.Android.keystoreName = "/Users/Shared/Jenkins/Development/VoxellersTestKey.keystore";
+        PlayerSettings.Android.keystorePass = "woong8589";
+        PlayerSettings.Android.keyaliasName = "key0";
+        PlayerSettings.Android.keyaliasPass = "woong8589";
+    }
+
+    //[MenuItem("Custom/CI/Build PC")]
     static void PerformPCBuildClient()
     {
         string pcDir = "/PC";
@@ -122,7 +115,7 @@ public class ProjectBuilder
         GenericBuild(SCENES, BUILD_TARGET_PATH, BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64, opt, "PC_BuildReport");
     }
 
-    [MenuItem("Custom/CI/Build_Android")]
+    //[MenuItem("Custom/CI/Build_Android")]
     static void PerformAndroidBuildClient()
     {
         buildDivision = "Irregular";
@@ -137,7 +130,7 @@ public class ProjectBuilder
         AndroidBuild();
     }
 
-    [MenuItem("Custom/CI/Build_Android_Debug")]
+    //[MenuItem("Custom/CI/Build_Android_Debug")]
     static void PerformAndroidBuildClientDebug()
     {
         BuildOptions opt = BuildOptions.Development | BuildOptions.ConnectWithProfiler;
@@ -145,7 +138,7 @@ public class ProjectBuilder
         AndroidBuild(opt);
     }
 
-    [MenuItem("Custom/CI/Build_Android_Debug_AutoRun")]
+    //[MenuItem("Custom/CI/Build_Android_Debug_AutoRun")]
     static void PerformAndroidBuildClientDebugAutoRun()
     {
         BuildOptions opt = BuildOptions.AutoRunPlayer | BuildOptions.Development | BuildOptions.ConnectWithProfiler;
