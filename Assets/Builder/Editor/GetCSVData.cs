@@ -7,7 +7,7 @@ using UnityEditor;
 public class GetCSVData
 {
 
-    static string csvFilePath = "/Users/Shared/Jenkins/Development/VersionSheet.csv";
+    static string csvFilePath = "/Users/Shared/Jenkins/Development/VersionSheetTestExample.csv";
 
     private int setBundleVersionCode;
     private string setVersion;
