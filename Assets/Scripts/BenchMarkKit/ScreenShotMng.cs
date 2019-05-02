@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TakeScreenShotScript : MonoBehaviour
+public class ScreenShotMng : MonoBehaviour
 {
 
-    private static TakeScreenShotScript instance;
+    private static ScreenShotMng instance;
 
     [SerializeField]
     private Camera myCam;

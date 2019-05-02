@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 using UnityEngine;
 using System.IO;
 
-public class ListToCsvPrototypeScript : MonoBehaviour
+public class ListToCsvPrototype : MonoBehaviour
 {
     // PerformanceCounter cpuCounter;
     // PerformanceCounter ramCounter;

@@ -4,8 +4,10 @@ using System.IO;
 using UnityEngine;
 using TMPro;
 
-public class BenchMarkMngScript : MonoBehaviour
+public class BenchMarkMng : MonoBehaviour
 {
+    [SerializeField]
+    private bool useTimer = false;
     [SerializeField]
     private TextMeshProUGUI frameRateText;
     [SerializeField]
@@ -72,12 +74,13 @@ public class BenchMarkMngScript : MonoBehaviour
         // Benchmark End
         if (currentTime >= targetTime)
         {
-            Time.timeScale = 0f;
+            if (useTimer)
+            {
+                Time.timeScale = 0f;
+            }
             testAvailable = false;
-            //Debug.Log("Average Frame Rate : " + averageFrameRate);
-            //TakeScreenShot();
             StartCoroutine(captureScreenshot());
-            RefreshGallery();
+            captureScreenshot();
             benchmarkEndText.gameObject.active = true;
         }
 
@@ -101,16 +104,8 @@ public class BenchMarkMngScript : MonoBehaviour
             if (currentFrame < targetFrameRate && testAvailable)
             {
                 WriteFrameLog();
-                // 스크린샷 찍을때 프레임이 드랍된다
-                //StartCoroutine(captureScreenshot());
             }
         }
-
-        // 테스트용
-        // if (Input.GetKey(KeyCode.Space))
-        // {
-        //     benchmarkEndText.gameObject.active = true;
-        // }
     }
 
     private void UpdateText()
@@ -127,7 +122,6 @@ public class BenchMarkMngScript : MonoBehaviour
         string tempText;
         tempText = "Time : " + currentTime + ", " + "Frame : " + currentFrame + "\n";
         frameLogText.text += tempText;
-        Debug.LogWarning(tempText);
     }
 
     private void GetMinMaxFrameRate()
@@ -139,37 +133,13 @@ public class BenchMarkMngScript : MonoBehaviour
             // 어짜피 모바일 기기에서 60fps를 넘겨봤자 의미가 없음 오히려 평균을 구할때 방해만 되기에 제한함
             if (maximumFrameRate > 60)
                 maximumFrameRate = 60;
-            //Debug.Log("Maximum Frame Rate : " + maximumFrameRate);
         }
 
         if (minimumFrameRate > currentFrame)
         {
             minimumFrameRate = currentFrame;
-            //Debug.Log("Minimum Frame Rate : " + minimumFrameRate);
         }
     }
-
-    // private void TakeScreenShot()
-    // {
-    //     if (screenShot)
-    //     {
-    //         // 에디터에선 이상하게 에러가 뜨는데 모바일에선 정상 작동함
-    //         // 사용하기 전 SD카드 권한을 획득해야 함
-    //         Debug.Log("Take Screenshot");
-    //         string drive = "/mnt/sdcard/DCIM/BenchmarkResult/";
-
-    //         DirectoryInfo di = new DirectoryInfo(drive);
-
-    //         if (di.Exists == false)
-    //             di.Create();
-
-    //         string timeStamp = System.DateTime.Now.ToString("yyyy.MM.dd(HH:mm:ss)");
-    //         string text = drive + "BenchmarkReult" + timeStamp + ".png";
-    //         string pathToSave = text;
-    //         ScreenCapture.CaptureScreenshot(pathToSave, 1);
-    //         screenShot = false;
-    //     }
-    // }
 
     IEnumerator captureScreenshot()
     {
@@ -199,17 +169,17 @@ public class BenchMarkMngScript : MonoBehaviour
 
     // 앨범 새로고침 기능. 들어보니 안드로이드든 iOS든 다 작동한다고 한다.
     // 이거 없으면 스샷 볼때마다 폰 껐다 켜야함
-    private void RefreshGallery()
+    private void RefreshDeviceGallery()
     {
         AndroidJavaClass classPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject objActivity = classPlayer.GetStatic<AndroidJavaObject>("currentActivity");
         AndroidJavaClass classUri = new AndroidJavaClass("android.net.Uri");
-        
-        AndroidJavaObject objIntent = 
-        new AndroidJavaObject("android.content.Intent", 
-        new object[2]{"android.intent.action.MEDIA_SCANNER_SCAN_FILE", 
+
+        AndroidJavaObject objIntent =
+        new AndroidJavaObject("android.content.Intent",
+        new object[2]{"android.intent.action.MEDIA_SCANNER_SCAN_FILE",
         classUri.CallStatic<AndroidJavaObject>("parse", "file://" + screenshotPath)});
 
-        objActivity.Call ("sendBroadcast", objIntent);
+        objActivity.Call("sendBroadcast", objIntent);
     }
 }
